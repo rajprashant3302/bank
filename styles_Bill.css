@@ -1,0 +1,107 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-image: url('bank2.webp'); /* Same as code4.html */
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+.container {
+    width: 90%;
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+}
+
+/* Header */
+.header {
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 32px;
+    color: #fff;
+}
+
+.header p {
+    font-size: 18px;
+    color: #bbb;
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-size: 16px;
+    color: #ddd;
+}
+
+select, input[type="text"], input[type="number"], input[type="password"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    background-color: #fff;
+    color: #333;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px;
+    font-size: 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Success Message */
+.success-message {
+    text-align: center;
+    padding: 20px;
+    background-color: #28a745;
+    border-radius: 8px;
+}
+
+.success-message p {
+    font-size: 18px;
+    color: #fff;
+}
+
+.success-message a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.success-message a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+    font-size: 16px;
+    color: #ccc;
+}

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinity Bank - Dashboard</title>
+    <link rel="stylesheet" href="styles_4.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header with Logo & Title -->
+        <div class="header">
+            <img src="logo.jpg" alt="Bank Logo" class="logo">
+            <h1>Infinity Bank</h1>
+            <p><sub>For everyone, anytime</sub></p>
+             <!-- ✅ Logout Button in Top Right -->
+             <a href="index.html" class="top-right">Logout</a>
+        </div>
+
+        <!-- Navigation Bar -->
+        <div class="navbar">
+            <div class="menu">
+                <a href="nav/navLoan.html">Loans</a>
+                <a href="nav/navaccount.html">Accounts</a>
+                <a href="nav/navinvestment.html">Investments</a>
+                <a href="nav/navotherservice.html">Other Services</a>
+                <a href="nav/navinsurance.html">Insurance</a>
+                <a href="nav/navoffers.html">Offers</a>
+            </div>
+        </div>
+
+        <!-- Welcome Section -->
+        <div class="welcome">
+            <h3 class="fas fa-user-circle"></h3> Hi, <span id="name">User</span>...
+        </div>
+
+        <!-- Account Number Display -->
+         <!-- ✅ Updated Account Number Display Section -->
+<div class="account-info">
+    <p>Account Number: <span id="account-number">**** **** **** <span id="last4"></span></span></p>
+    <input type="password" id="password-input" placeholder="Enter password" class="password-field">
+    <button class="blue-button" onclick="revealFullAccount()">Show Full Account Number</button>
+</div>
+
+<script>
+    const username = localStorage.getItem("username");
+    let name = localStorage.getItem("name");
+    let accountNumber = localStorage.getItem("accountNumber");
+
+    if (!username) {
+        alert("Error: Username not found. Redirecting to login.");
+        window.location.href = "index.html";
+    }
+
+    async function fetchUserDetails() {
+        try {
+            const response = await fetch(`/getUserDetails?username=${encodeURIComponent(username)}`);
+            const data = await response.json();
+
+            if (data.success) {
+                name = data.name;
+                accountNumber = data.accountNumber;
+                localStorage.setItem("name", name);
+                localStorage.setItem("accountNumber", accountNumber);
+
+                document.getElementById("name").textContent = name;
+                document.getElementById("last4").textContent = accountNumber.slice(-4);
+            }
+        } catch (error) {
+            console.error("Error fetching user details:", error);
+        }
+    }
+
+    if (!name || !accountNumber) {
+        fetchUserDetails();
+    } else {
+        document.getElementById("name").textContent = name;
+        document.getElementById("last4").textContent = accountNumber.slice(-4);
+    }
+
+    async function revealFullAccount() {
+        const password = document.getElementById("password-input").value;
+
+        try {
+            const response = await fetch("/verify-password", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                document.getElementById("account-number").innerHTML = `<strong>${accountNumber}</strong>`;
+            } else {
+                alert("Incorrect password!");
+            }
+        } catch (error) {
+            console.error("Error verifying password:", error);
+            alert("Server error. Please try again.");
+        }
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard">
+            <a href="deposit.html"><i class="fas fa-wallet"></i> Deposit Money</a>
+            <a href="withdraw.html"><i class="fas fa-paper-plane"></i> Withdraw Money</a>
+            <a href="send-money.html"><i class="fas fa-exchange-alt"></i> Send Money</a>
+            <a href="bill-pay.html"><i class="fas fa-file-invoice"></i> Bill Pay</a>
+            <a href="recharge.html"><i class="fas fa-bolt"></i> Recharge</a>
+            <a href="deposit-loan-emi.html"><i class="fas fa-coins"></i> Deposit Loan/EMI</a>
+            <a href="view-card-details.html"><i class="fas fa-credit-card"></i> View Card Details</a>
+            <a href="check-balance.html"><i class="fas fa-money-bill-wave"></i> Check Balance</a>
+            <a href="transactions.html"><i class="fas fa-history"></i> Transaction History</a>
+        </div>
+
+        <!-- Balance Display -->
+        <div id="balance-section" style="display: none;">
+            <h3>Your Balance: ₹<span id="balance">0</span></h3>
+        </div>
+
+        <!-- Transactions Section -->
+        <div id="transaction-history" style="display: none;">
+            <h3>Transaction History</h3>
+            <ul id="transaction-list"></ul>
+        </div>
+
+        <!-- About Us Section -->
+        <div class="about">
+            <h3>About Us</h3>
+            <p>Infinity Bank offers secure banking solutions with loans, investments, and digital banking features.</p>
+            <a href="#">Terms & Conditions</a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            IP Address 123.45.78.45 | 07:14 PM
+        </div>
+    </div>
+</body>
+</html>

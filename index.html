@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- ✅ Create Account Button (Top Right) -->
+    <a href="code3.html" class="top-right">Create Account</a>
+    <div class="container">
+        <h2>Welcome Back</h2>
+        <label>Username:</label>
+        <input type="text" id="username" required>
+
+        <label>Password:</label>
+        <input type="password" id="password" required>
+
+        <button onclick="login()">Login</button>
+        <p id="message"></p>
+    </div>
+    <script>
+        async function login() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const message = document.getElementById("message");
+
+    if (!username || !password) {
+        message.textContent = "Please enter both username and password.";
+        return;
+    }
+
+    try {
+        const response = await fetch("/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password })
+        });
+
+        const result = await response.json();
+        message.textContent = result.message;
+
+        if (result.success) {
+            localStorage.setItem("username", username);
+            localStorage.setItem("name", result.name);
+            setTimeout(() => {
+                window.location.href = result.redirect; // Redirect to dashboard
+            }, 2000);
+        } else if (result.redirect) {
+            setTimeout(() => {
+                window.location.href = result.redirect; // Redirect to registration
+            }, 2000);
+        }
+    } catch (error) {
+        message.textContent = "Error connecting to server.";
+    }
+}
+
+    </script>
+    
+</body>
+</html>

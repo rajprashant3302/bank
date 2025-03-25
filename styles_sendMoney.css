@@ -1,0 +1,124 @@
+/* General Styles */
+body {
+    display: flex;
+    background: url('bank2.webp') no-repeat center center/cover;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 600px;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 28px;
+    color: #333;
+}
+
+.header p {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-size: 16px;
+    color: #333;
+}
+
+input[type="text"], input[type="number"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px;
+    font-size: 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+#recipient-details {
+    display: none;
+    margin-top: 15px;
+    padding: 10px;
+    background: #e8f4ff;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+}
+
+#otp-section {
+    display: none;
+    margin-top: 10px;
+}
+
+
+/* OTP Section */
+#otp-section {
+    margin-top: 20px;
+}
+
+/* Success Message */
+.success-message {
+    text-align: center;
+    padding: 20px;
+    background-color: #e0ffe0;
+    border: 1px solid #99cc99;
+    border-radius: 8px;
+}
+
+.success-message p {
+    font-size: 18px;
+    color: #333;
+}
+
+.success-message a {
+    text-decoration: none;
+    color: #007bff;
+    font-size: 16px;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.success-message a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+.footer {
+    margin-top: 20px;
+    font-size: 14px;
+    color: gray;
+}

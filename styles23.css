@@ -1,0 +1,80 @@
+/* Apply the same background as code4.html */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: url('bank2.webp') no-repeat center center/cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+/* Center the container */
+.container {
+    width: 400px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Title */
+h1 {
+    color: #333;
+}
+
+/* Input fields & buttons in same line */
+.input-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+/* Input styling */
+input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* OTP button styling */
+.otp-btn {
+    background-color: blue;
+    color: white;
+    border: none;
+    padding: 12px 15px;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* OTP button hover effect */
+.otp-btn:hover {
+    background-color: darkblue;
+}
+
+/* Error message styling */
+#message {
+    color: red;
+    font-weight: bold;
+}
+
+/* Back to dashboard link */
+.back-link {
+    display: block;
+    margin-top: 15px;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}

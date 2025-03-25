@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan QR - Infinity Bank</title>
+    <link rel="stylesheet" href="styles_4.css">
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="logo.jpg" alt="Bank Logo" class="logo">
+            <h1>Infinity Bank</h1>
+            <h1>Scan QR Code</h1>
+            <p>Scan the QR code to make payments or view details.</p>
+        </div>
+
+        <div class="content">
+            <div id="qrcode" style="text-align: center;"></div>
+            <p>Scan this QR code with your mobile banking app.</p>
+        </div>
+
+        <div class="footer">
+            <a href="code6.html" class="go-dashboard">Go to Dashboard</a>
+            <p>IP Address 123.45.78.45 | 07:14 PM</p>
+        </div>
+    </div>
+
+    <script>
+        // Generate a QR code for a payment or URL
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
+            text: "https://www.infinitybank.com/pay?amount=500&toAccount=123456789",
+            width: 128,
+            height: 128,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+    </script>
+</body>
+</html>

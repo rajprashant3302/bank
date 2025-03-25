@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Balance - Infinity Bank</title>
+    <link rel="stylesheet" href="styles_checkbal.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Infinity Bank</h1>
+            <h1>Check Balance</h1>
+            <p>Verify yourself and check your account balance securely.</p>
+        </div>
+
+        <!-- CAPTCHA Verification -->
+        <div id="captcha-verification" class="content">
+            <p>Please verify that you are not a robot:</p>
+            <label>
+                <input type="checkbox" id="robot-checkbox"> I am not a robot
+            </label>
+            <br>
+            <button onclick="verifyCaptcha()">Verify</button>
+        </div>
+
+        <!-- Password Entry -->
+        <div id="password-entry" class="content" style="display: none;">
+            <p>Enter your password to view your balance:</p>
+            <input type="password" id="password" placeholder="Enter Password" required>
+            <button onclick="checkPassword()">Submit</button>
+        </div>
+
+        <!-- Balance Display -->
+        <div id="balance-display" class="content" style="display: none;">
+            <p>Your current balance is:</p>
+            <h2 id="balance-amount">₹0</h2>
+            <p>Transaction successful! You can now access your balance.</p>
+            <a href="code4.html" class="go-dashboard">Go to Dashboard</a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>IP Address 123.45.78.45 | 07:14 PM</p>
+        </div>
+    </div>
+
+    <script>
+        function verifyCaptcha() {
+            const checkbox = document.getElementById('robot-checkbox');
+
+            if (!checkbox.checked) {
+                alert("Please verify that you are not a robot by checking the box.");
+                return;
+            }
+
+            document.getElementById('captcha-verification').style.display = 'none';
+            document.getElementById('password-entry').style.display = 'block';
+        }
+
+        async function checkPassword() {
+            const password = document.getElementById('password').value;
+            const username = localStorage.getItem("username");
+
+            if (!password) {
+                alert("Please enter your password.");
+                return;
+            }
+
+            try {
+                const response = await fetch("/check-balance", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    document.getElementById('password-entry').style.display = 'none';
+                    document.getElementById('balance-display').style.display = 'block';
+                    document.getElementById('balance-amount').textContent = `₹${data.balance}`;
+                } else {
+                    alert(data.message);
+                }
+            } catch (error) {
+                console.error("Error checking balance:", error);
+                alert("Failed to check balance.");
+            }
+        }
+    </script>
+</body>
+</html>

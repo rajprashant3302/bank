@@ -1,0 +1,90 @@
+{
+  "aman": {
+    "name": "Aman",
+    "dob": "2025-03-12",
+    "aadhaar": "231561555",
+    "phone": "51676894",
+    "email": "sjijaiswal4@gmail.com",
+    "address": "bihar",
+    "password": "1234567890",
+    "accountNumber": "168185584449267",
+    "cardNumber": "9747234067123740",
+    "balance": 0,
+    "transactions": []
+  },
+  "FORTUNE": {
+    "name": "saubhagya ji jaiswal",
+    "dob": "2007-02-09",
+    "aadhaar": "1234",
+    "phone": "9235711751",
+    "email": "sjijaiswal4@gmail.com",
+    "address": "cvr A 207",
+    "password": "SAU456GYA",
+    "accountNumber": "837393100138163",
+    "cardNumber": "5779577840154615",
+    "balance": 1601,
+    "transactions": [
+      "24/3/2025, 10:57:17 pm - Deposited ₹1000",
+      "24/3/2025, 10:57:51 pm - Withdrew ₹50",
+      "24/3/2025, 10:58:58 pm - Paid ₹349 for internet bill #1234",
+      "25/3/2025, 7:27:32 pm - Received ₹1000 from Prashant Raj"
+    ]
+  },
+  "prashant": {
+    "name": "Prashant Raj",
+    "dob": "2006-07-09",
+    "aadhaar": "123456789",
+    "phone": "6203975552",
+    "email": "rajprashant3302@gmail.com",
+    "address": "bihar",
+    "password": "12345678",
+    "accountNumber": "656496888746738",
+    "cardNumber": "1215971211241305",
+    "balance": 3737,
+    "transactions": [
+      "25/3/2025, 8:34:58 am - Deposited ₹10000",
+      "25/3/2025, 8:35:31 am - Withdrew ₹100",
+      "25/3/2025, 8:36:26 am - Paid ₹1000 for electricity bill #123",
+      "25/3/2025, 8:37:04 am - Recharge of ₹199",
+      "25/3/2025, 8:37:36 am - EMI Payment of ₹999",
+      "25/3/2025, 8:38:17 am - EMI Payment of ₹999",
+      "25/3/2025, 8:46:09 am - EMI Payment of ₹999",
+      "25/3/2025, 9:08:54 am - EMI Payment of ₹89",
+      "25/3/2025, 9:08:54 am - EMI Payment of ₹100",
+      "25/3/2025, 9:06:54 am - EMI Payment of ₹578",
+      "25/3/2025, 9:08:54 am - EMI Payment of ₹200",
+      "25/3/2025, 7:27:32 pm - Sent ₹1000 to saubhagya ji jaiswal"
+    ]
+  },
+  "aniket": {
+    "name": "Aniket kumar",
+    "dob": "2025-03-24",
+    "aadhaar": "5446546",
+    "phone": "8409248314",
+    "email": "aniketkumar8314@gmail.com",
+    "address": "cvr",
+    "password": "bank78945",
+    "accountNumber": "422381311234513",
+    "cardNumber": "8288688084794638",
+    "balance": 401,
+    "transactions": [
+      "25/3/2025, 6:30:11 pm - Deposited ₹750",
+      "25/3/2025, 6:32:25 pm - Recharge of ₹349"
+    ]
+  },
+  "rahul": {
+    "name": "Rahul Kumar sahoo",
+    "dob": "2006-05-20",
+    "aadhaar": "12341556156561",
+    "phone": "4566",
+    "email": "rahul_2401cs09@iitp.ac.in",
+    "address": "orissa",
+    "password": "123456789",
+    "accountNumber": "924395759049531",
+    "cardNumber": "1582978875909283",
+    "balance": 10000,
+    "transactions": [
+      "25/3/2025, 6:47:18 pm - Deposited ₹10000"
+    ]
+  }
+}

@@ -1,0 +1,122 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-image: url('bank2.webp'); /* ✅ Set same background as code4.html */
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 20px;
+}
+
+/* Container */
+.container {
+    width: 100%;
+    max-width: 800px;
+    margin: 50px auto;
+    background: rgba(0, 0, 0, 0.7); /* ✅ Dark overlay effect */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Header */
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 36px;
+    color: #f8f9fa;
+}
+
+.header p {
+    font-size: 18px;
+    color: #b0b3b8;
+}
+
+/* Content */
+.content {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Password Entry */
+#password-entry input {
+    padding: 10px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 100%;
+    max-width: 350px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+#password-entry button {
+    padding: 12px;
+    background-color: #17a2b8;
+    font-size: 18px;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+#password-entry button:hover {
+    background-color: #138496;
+}
+
+/* Card Details */
+#card-details h2 {
+    font-size: 32px;
+    color: #ffc107;
+}
+
+.card {
+    background: linear-gradient(135deg, #007bff, #00d4ff);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    width: 320px;
+    margin: 20px auto;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-number {
+    font-size: 26px;
+    letter-spacing: 3px;
+}
+
+.card-holder, .card-expiry {
+    margin-top: 12px;
+    font-size: 18px;
+}
+
+/* Go to Dashboard */
+.go-dashboard {
+    display: inline-block;
+    margin-top: 25px;
+    font-size: 18px;
+    color: #ffc107;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.go-dashboard:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    margin-top: 50px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.2);
+    font-size: 16px;
+    color: #e4e6eb;
+    border-radius: 10px;
+}

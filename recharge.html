@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recharge - Infinity Bank</title>
+    <link rel="stylesheet" href="styles_recharge.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Recharge</h1>
+            <p>Recharge your TV cable or SIM card easily.</p>
+        </div>
+
+        <!-- Recharge Form -->
+        <div id="recharge-form" class="content">
+            <p>Select your service provider:</p>
+            <div class="provider-options">
+                <label>
+                    <input type="radio" name="provider" value="tv-cable" id="tv-cable" onclick="toggleProvider('tv')"> TV Cable
+                </label>
+                <label>
+                    <input type="radio" name="provider" value="sim" id="sim" onclick="toggleProvider('sim')"> SIM Card
+                </label>
+            </div>
+
+            <!-- TV Cable Options -->
+            <div id="tv-cable-options" class="provider-options" style="display: none;">
+                <label for="tv-company">Choose TV Cable Company:</label>
+                <select id="tv-company">
+                    <option value="xyz-tv">DISHTV</option>
+                    <option value="abc-tv">AIRTEL</option>
+                    <option value="pqr-tv">TATA SKY</option>
+                </select>
+            </div>
+
+            <!-- SIM Options -->
+            <div id="sim-options" class="provider-options" style="display: none;">
+                <label for="sim-company">Choose SIM Company:</label>
+                <select id="sim-company">
+                    <option value="vodafone">BSNL</option>
+                    <option value="airtel">Airtel</option>
+                    <option value="jio">Jio</option>
+                </select>
+            </div>
+
+            <!-- TV Cable Number Input -->
+            <div id="tv-cable-number" class="provider-options" style="display: none;">
+                <label for="set-top-box">Enter Set-Top Box Number:</label>
+                <input type="text" id="set-top-box" placeholder="Enter Set-Top Box Number" required>
+            </div>
+
+            <!-- SIM Number Input -->
+            <div id="sim-number" class="provider-options" style="display: none;">
+                <label for="mobile-no">Enter Mobile Number:</label>
+                <input type="text" id="mobile-no" placeholder="Enter Mobile Number" required>
+            </div>
+
+            <label for="amount">Enter Amount (₹):</label>
+            <input type="number" id="amount" placeholder="Enter Amount" required>
+
+            <button onclick="requestOTP()">Get OTP</button>
+
+            <div id="otp-section" style="display: none;">
+                <label for="otp">Enter OTP:</label>
+                <input type="text" id="otp" name="otp" placeholder="Enter OTP" required>
+                <button onclick="processRecharge()">Proceed to Recharge</button>
+            </div>
+        </div>
+
+        <!-- Recharge Confirmation -->
+        <div id="recharge-confirmation" class="content" style="display: none;">
+            <h2>Recharge Successful!</h2>
+            <p>Your recharge has been completed successfully.</p>
+            <p>Amount Deducted: ₹<span id="amount-deducted"></span></p>
+            <p>Remaining Balance: ₹<span id="new-balance"></span></p>
+            <a href="code4.html" class="go-dashboard">Go to Dashboard</a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>IP Address 123.45.78.45 | 07:14 PM</p>
+        </div>
+    </div>
+
+    <script>
+        const username = localStorage.getItem("username");
+
+        function toggleProvider(provider) {
+            document.getElementById('tv-cable-options').style.display = 'none';
+            document.getElementById('sim-options').style.display = 'none';
+            document.getElementById('tv-cable-number').style.display = 'none';
+            document.getElementById('sim-number').style.display = 'none';
+
+            if (provider === 'tv') {
+                document.getElementById('tv-cable-options').style.display = 'block';
+                document.getElementById('tv-cable-number').style.display = 'block';
+            } else if (provider === 'sim') {
+                document.getElementById('sim-options').style.display = 'block';
+                document.getElementById('sim-number').style.display = 'block';
+            }
+        }
+
+        async function requestOTP() {
+            if (!username) {
+                alert("User not logged in!");
+                return;
+            }
+            const response = await fetch("/request-otp", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username })
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                alert("OTP sent to your registered email!");
+                document.getElementById("otp-section").style.display = "block";
+            } else {
+                alert(data.message);
+            }
+        }
+        async function processRecharge() {
+    const amount = parseFloat(document.getElementById("amount").value);
+    const otp = document.getElementById("otp").value;
+
+    if (!amount || amount <= 0 || !otp) {
+        alert("All fields are required!");
+        return;
+    }
+
+    const response = await fetch("/recharge", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, amount, otp })
+    });
+
+    const data = await response.json();
+    if (data.success) {
+        document.getElementById("recharge-form").style.display = "none";
+        document.getElementById("recharge-confirmation").style.display = "block";
+        document.getElementById("amount-deducted").innerText = amount;
+        document.getElementById("new-balance").innerText = data.newBalance;
+
+        // ✅ Redirect to dashboard after 3 seconds
+        setTimeout(() => {
+            window.location.href = "code4.html";
+        }, 3000);
+    } else {
+        alert(data.message);
+    }
+}
+
+
+
+
+    </script>
+</body>
+</html>
