@@ -1,0 +1,108 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-image: url('bank2.webp'); /* ✅ Same background as code4.html */
+    background-size: cover;
+    background-position: center;
+    color: #333;
+    padding: 20px;
+}
+
+/* Centering Container */
+.container {
+    width: 100%;
+    max-width: 600px;
+    margin: 100px auto;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Header */
+.header h1 {
+    font-size: 32px;
+    color: #333;
+}
+
+.header p {
+    font-size: 18px;
+    color: #666;
+}
+
+/* Content */
+.content {
+    margin-top: 20px;
+}
+
+/* CAPTCHA Section */
+label {
+    font-size: 16px;
+    color: #333;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+/* Buttons */
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px;
+    font-size: 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Password Entry */
+#password-entry input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 20px;
+}
+
+#password-entry button {
+    padding: 12px;
+    background-color: #28a745;
+    font-size: 18px;
+}
+
+/* Balance Display */
+#balance-display h2 {
+    font-size: 40px;
+    color: #007bff;
+}
+
+#balance-display a {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 18px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+#balance-display a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    margin-top: 50px;
+    padding: 15px;
+    background-color: #f1f1f1;
+    font-size: 16px;
+    color: #666;
+}

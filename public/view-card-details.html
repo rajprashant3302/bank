@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Card Details - Infinity Bank</title>
+    <link rel="stylesheet" href="styles_card.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>View Card Details</h1>
+            <p>To view your card details, please verify your identity by entering your password.</p>
+        </div>
+
+        <!-- Password Entry -->
+        <div id="password-entry" class="content">
+            <label for="password">Enter your Password:</label>
+            <input type="password" id="password" placeholder="Enter Password" required>
+            <button onclick="checkPassword()">Submit</button>
+        </div>
+
+        <!-- Card Details -->
+        <div id="card-details" class="content" style="display: none;">
+            <h2>Infinity Bank Debit Card</h2>
+            <div class="card">
+                <div class="card-number" id="card-number">**** **** **** ****</div>
+                <div class="card-holder" id="card-holder">Card Holder: </div>
+                <div class="card-expiry" id="card-expiry">Expiry Date: </div>
+            </div>
+            <p>Your debit card details are displayed above. Please keep them secure.</p>
+            <a href="code4.html" class="go-dashboard">Go to Dashboard</a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>IP Address 123.45.78.45 | 07:14 PM</p>
+        </div>
+    </div>
+
+    <script>
+        async function checkPassword() {
+            const password = document.getElementById('password').value;
+            const username = localStorage.getItem("username");
+
+            if (!password || !username) {
+                alert("Invalid request. Please log in first.");
+                return;
+            }
+
+            try {
+                const response = await fetch("/get-card-details", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    document.getElementById("password-entry").style.display = "none";
+                    document.getElementById("card-details").style.display = "block";
+
+                    document.getElementById("card-number").textContent = result.cardNumber;
+                    document.getElementById("card-holder").textContent = "Card Holder: " + result.name;
+                    document.getElementById("card-expiry").textContent = "Expiry Date: " + result.expiry;
+                } else {
+                    alert(result.message);
+                }
+            } catch (error) {
+                alert("Error connecting to server.");
+            }
+        }
+    </script>
+</body>
+</html>

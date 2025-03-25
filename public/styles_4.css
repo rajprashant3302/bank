@@ -1,0 +1,130 @@
+body {
+    display: flex;
+    background: url('bank2.webp') no-repeat center center/cover;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 800px;
+}
+/* ✅ Logout Button at Top Right */
+.logout-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.logout-button:hover {
+    background: #0056b3;
+}
+
+.header {
+    text-align: center;
+}
+
+.logo {
+    width: 100px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.navbar {
+    margin: 20px 0;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #007BFF;
+    padding: 10px 15px;
+    display: inline-block;
+}
+
+.menu a:hover {
+    background-color: #007BFF;
+    color: white;
+    border-radius: 5px;
+}
+
+.welcome {
+    font-size: 20px;
+    margin: 20px 0;
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.dashboard a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #007BFF;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-decoration: none;
+}
+ /* ✅ Style for the top-right "login" button */
+ .top-right {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+}
+.top-right:hover {
+    background-color: #0056b3;
+}
+
+
+
+.dashboard a i {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.dashboard a:hover {
+    background: #0056b3;
+}
+
+.about {
+    margin: 20px 0;
+}
+
+.about a {
+    text-decoration: none;
+    color: #007BFF;
+}
+
+.footer {
+    margin-top: 20px;
+    font-size: 14px;
+    color: gray;
+}

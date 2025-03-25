@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account & Card Details - Infinity Bank</title>
+    <link rel="stylesheet" href="styles_4.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Infinity Bank</h1>
+        <h2>Account & Card Details</h2>
+
+        <div class="details">
+            <p><strong>Name:</strong> <span id="name"></span></p>
+            <p><strong>Email:</strong> <span id="email"></span></p>
+            <p><strong>Account Number:</strong> <span id="accountNumber"></span></p>
+            <p><strong>Card Number:</strong> <span id="cardNumber"></span></p>
+            <p><strong>Address:</strong> <span id="address"></span></p>
+            <p><strong>Date of Birth:</strong> <span id="dob"></span></p>
+            <p><strong>Current Balance:</strong> ₹<span id="balance"></span></p>
+        </div>
+
+        <a href="code4.html" class="btn">Back to Dashboard</a>
+    </div>
+
+    <script>
+        const username = localStorage.getItem("username");
+
+        fetch(`/getUserDetails?username=${username}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById("name").textContent = data.name;
+                    document.getElementById("email").textContent = data.email;
+                    document.getElementById("accountNumber").textContent = data.accountNumber;
+                    document.getElementById("cardNumber").textContent = data.cardNumber;
+                    document.getElementById("address").textContent = data.address;
+                    document.getElementById("dob").textContent = data.dob;
+                    document.getElementById("balance").textContent = data.balance;
+                } else {
+                    alert("Error fetching details.");
+                }
+            });
+    </script>
+</body>
+</html>

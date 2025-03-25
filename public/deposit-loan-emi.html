@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deposit / Loan EMI - Infinity Bank</title>
+    <link rel="stylesheet" href="styles_loan.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Deposit / Loan EMI</h1>
+            <p>Manage your deposits and loan EMIs here.</p>
+        </div>
+
+        <!-- EMI Details Section -->
+        <div class="emi-details">
+            <h2>Loan EMI Details</h2>
+            <div class="emi-info">
+                <div class="emi-info-item">
+                    <span class="emi-info-label">Loan Amount:</span>
+                    <span class="emi-info-value">₹500,000.00</span>
+                </div>
+                <div class="emi-info-item">
+                    <span class="emi-info-label">EMI Amount:</span>
+                    <span class="emi-info-value">₹25,000.00</span>
+                </div>
+                <div class="emi-info-item">
+                    <span class="emi-info-label">Next EMI Date:</span>
+                    <span class="emi-info-value">2025-04-01</span>
+                </div>
+                <div class="emi-info-item">
+                    <span class="emi-info-label">Remaining Balance:</span>
+                    <span class="emi-info-value">₹300,000.00</span>
+                </div>
+                <div class="emi-info-item">
+                    <span class="emi-info-label">Total Paid So Far:</span>
+                    <span class="emi-info-value">₹200,000.00</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- EMI Payment Form -->
+        <div class="emi-payment">
+            <h3>Pay EMI</h3>
+            <label for="emi-amount">Enter EMI Amount:</label>
+            <input type="number" id="emi-amount" required>
+            <button class="otp-button" onclick="requestOTP()">Get OTP</button>
+        </div>
+
+        <!-- OTP Verification -->
+        <div id="otp-section" class="emi-payment" style="display: none;">
+            <label for="otp">Enter OTP:</label>
+            <input type="text" id="otp" required>
+            <button class="otp-button" onclick="payEMI()">Pay EMI</button>
+        </div>
+
+        <!-- Success Message -->
+        <div id="success-message" class="emi-payment" style="display: none;">
+            <p><strong>Payment Successful!</strong> Your EMI of ₹<span id="paid-amount"></span> has been paid.</p>
+            <p>Remaining Balance: ₹<span id="new-balance"></span></p>
+            <a href="code4.html" class="go-dashboard">Go to Dashboard</a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>IP Address 123.45.78.45 | 07:14 PM</p>
+        </div>
+    </div>
+
+    <script>
+        const username = localStorage.getItem("username");
+
+        async function requestOTP() {
+            if (!username) {
+                alert("User not logged in!");
+                return;
+            }
+            const response = await fetch("/request-otp", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username })
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                alert("OTP sent to your registered email!");
+                document.getElementById("otp-section").style.display = "block";
+            } else {
+                alert(data.message);
+            }
+        }
+
+    
+    
+    
+        async function payEMI() {
+    const emiAmount = parseFloat(document.getElementById("emi-amount").value);
+    const otp = document.getElementById("otp").value;
+    const message = document.getElementById("success-message"); // ✅ Get the success message container
+
+    if (!emiAmount || !otp) {
+        alert("All fields are required!");
+        return;
+    }
+
+    try {
+        const response = await fetch("/pay-emi", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, emiAmount, otp })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            console.log("✅ EMI Payment Successful! Updating UI...");
+
+            // ✅ Hide payment & OTP section
+            document.querySelector(".emi-payment").style.display = "none";
+            document.getElementById("otp-section").style.display = "none";
+
+            // ✅ Show the success message
+            message.style.display = "block";
+            document.getElementById("paid-amount").innerText = emiAmount;
+            document.getElementById("new-balance").innerText = data.newBalance;
+
+            // ✅ Redirect to dashboard after 3 seconds
+            setTimeout(() => {
+                window.location.href = "code4.html";
+            }, 3000);
+        } else {
+            alert(data.message);
+        }
+    } catch (error) {
+        console.error("❌ Error processing EMI payment:", error);
+        alert("Server error. Please try again.");
+    }
+}
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>

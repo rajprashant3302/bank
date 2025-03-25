@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Money - Infinity Bank</title>
+    <link rel="stylesheet" href="styles_sendMoney.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Infinity Bank</h1>
+            <h1>Send Money</h1>
+            <p>Transfer funds to any account quickly and securely.</p>
+        </div>
+
+        <div class="content">
+            <form id="send-money-form">
+                <label for="account-number">Recipient's Account Number:</label>
+                <input type="text" id="account-number" name="account-number" placeholder="Enter account number" required>
+                <button type="button" onclick="verifyRecipient()">Verify</button>
+
+                <!-- Show recipient details here -->
+                <div id="recipient-details" style="display: none;">
+                    <p>Recipient: <strong id="recipient-name"></strong></p>
+                    <label for="amount">Amount (₹):</label>
+                    <input type="number" id="amount" name="amount" placeholder="Enter amount" required>
+                    <button type="button" onclick="sendOTP()">Send OTP</button>
+                </div>
+
+                <!-- OTP Verification -->
+                <div id="otp-section" style="display: none;">
+                    <label for="otp">Enter OTP:</label>
+                    <input type="text" id="otp" required>
+                    <button type="button" onclick="processTransaction()">Verify OTP & Transfer</button>
+                </div>
+            </form>
+
+            <!-- Success Message -->
+            <div id="success-message" class="success-message" style="display: none;">
+                <p><i class="fas fa-check-circle"></i> Transaction Successful! ₹<span id="amount-sent"></span> has been sent to <span id="recipient-name-final"></span>.</p>
+                <a href="code4.html" class="back-to-dashboard">Go back to Dashboard</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>IP Address 123.45.78.45 | 07:14 PM</p>
+        </div>
+    </div>
+
+    <script>
+        const username = localStorage.getItem("username");
+        let recipientUsername = "";
+    async function verifyRecipient() {
+    const accountNumber = document.getElementById('account-number').value;
+
+    if (!accountNumber) {
+        alert("Please enter an account number.");
+        return;
+    }
+
+    const response = await fetch("/verify-account", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ accountNumber })
+    });
+
+    const data = await response.json();
+    if (data.success) {
+        recipientUsername = data.username;
+        document.getElementById("recipient-name").textContent = data.name;
+        document.getElementById("recipient-details").style.display = "block"; // ✅ Show recipient details
+    } else {
+        alert("Account not found. Please re-enter the account number.");
+    }
+}
+
+
+        async function sendOTP() {
+            if (!username) {
+                alert("User not logged in!");
+                return;
+            }
+
+            const response = await fetch("/request-otp", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username })
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                alert("OTP sent to your registered email!");
+                document.getElementById("otp-section").style.display = "block";
+            } else {
+                alert(data.message);
+            }
+        }
+
+        async function processTransaction() {
+            const amount = parseFloat(document.getElementById("amount").value);
+            const otp = document.getElementById("otp").value;
+
+            if (!amount || amount <= 0 || !otp) {
+                alert("All fields are required!");
+                return;
+            }
+
+            const response = await fetch("/transfer-money", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, recipientUsername, amount, otp })
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                document.getElementById("send-money-form").style.display = "none";
+                document.getElementById("success-message").style.display = "block";
+                document.getElementById("amount-sent").innerText = amount;
+                document.getElementById("recipient-name-final").innerText = document.getElementById("recipient-name").textContent;
+
+                // ✅ Redirect to dashboard after 3 seconds
+                setTimeout(() => {
+                    window.location.href = "code4.html";
+                }, 3000);
+            } else {
+                alert(data.message);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Services - Infinity Bank</title>
+    <link rel="stylesheet" href="styles_loan.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Infinity Bank - Loan Services</h1>
+            <img src="../logo.jpg" alt="Bank Logo" class="logo">
+            <p>Explore a variety of loan options tailored to your needs.</p>
+        </div>
+        
+        <!-- Loan Categories -->
+        <div class="loan-options">
+            <div class="loan-box">
+                <h2>Home Loan</h2>
+                <p>Low-interest rates starting at 6.75% p.a. Flexible repayment up to 30 years.</p>
+                <a href="#" class="apply-btn">Apply Now</a>
+            </div>
+            <div class="loan-box">
+                <h2>Personal Loan</h2>
+                <p>Get up to ₹25 lakhs with minimal documentation. Instant approvals available.</p>
+                <a href="#" class="apply-btn">Apply Now</a>
+            </div>
+            <div class="loan-box">
+                <h2>Car Loan</h2>
+                <p>Own your dream car with our easy financing options. 100% funding available.</p>
+                <a href="#" class="apply-btn">Apply Now</a>
+            </div>
+            <div class="loan-box">
+                <h2>Education Loan</h2>
+                <p>Fund your education with loans covering tuition and living expenses.</p>
+                <a href="#" class="apply-btn">Apply Now</a>
+            </div>
+        </div>
+        
+        <!-- Loan Calculator -->
+        <div class="loan-calculator">
+            <h2>Loan EMI Calculator</h2>
+            <label>Loan Amount (₹):</label>
+            <input type="number" id="loan-amount" placeholder="Enter amount">
+            <label>Interest Rate (%):</label>
+            <input type="number" id="interest-rate" placeholder="Enter rate">
+            <label>Loan Tenure (Years):</label>
+            <input type="number" id="tenure" placeholder="Enter tenure">
+            <button onclick="calculateEMI()">Calculate EMI</button>
+            <p id="emi-result"></p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <a href="../code4.html" class="back-dashboard">Back to Dashboard</a>
+        </div>
+    </div>
+
+    <script>
+        function calculateEMI() {
+            let amount = parseFloat(document.getElementById('loan-amount').value);
+            let rate = parseFloat(document.getElementById('interest-rate').value) / 1200;
+            let tenure = parseFloat(document.getElementById('tenure').value) * 12;
+            
+            if (isNaN(amount) || isNaN(rate) || isNaN(tenure)) {
+                document.getElementById('emi-result').textContent = "Please enter valid values.";
+                return;
+            }
+
+            let emi = (amount * rate * Math.pow(1 + rate, tenure)) / (Math.pow(1 + rate, tenure) - 1);
+            document.getElementById('emi-result').textContent = `Your estimated EMI is ₹${emi.toFixed(2)} per month.`;
+        }
+    </script>
+</body>
+</html>

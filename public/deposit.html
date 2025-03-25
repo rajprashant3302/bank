@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deposit Money</title>
+    <link rel="stylesheet" href="styles23.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Deposit Money</h1>
+        
+        <!-- Enter Amount & Get OTP in Same Line -->
+        <div class="input-group">
+            <input type="number" id="amount" placeholder="Enter Amount" required>
+            <button class="otp-btn" onclick="requestOTP()">Get OTP</button>
+        </div>
+
+        <!-- Enter OTP & Verify in Same Line -->
+        <div class="input-group">
+            <input type="text" id="otp" placeholder="Enter OTP" required>
+            <button class="otp-btn" onclick="depositMoney()">Verify & Deposit</button>
+        </div>
+
+        <p id="message"></p> <!-- Display success/error messages -->
+
+        <a href="code4.html" class="back-link">← Back to Dashboard</a>
+    </div>
+
+    <script>
+        async function requestOTP() {
+            const response = await fetch("/request-otp", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username: localStorage.getItem("username") })
+            });
+
+            const data = await response.json();
+            document.getElementById("message").textContent = data.message;
+        }
+
+        async function depositMoney() {
+            const amount = document.getElementById("amount").value;
+            const otp = document.getElementById("otp").value;
+
+            if (!amount || !otp) {
+                document.getElementById("message").textContent = "Please enter both amount and OTP.";
+                return;
+            }
+
+            const response = await fetch("/transaction", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                    username: localStorage.getItem("username"), 
+                    type: "deposit", 
+                    amount: parseFloat(amount), 
+                    otp 
+                })
+            });
+
+            const data = await response.json();
+            document.getElementById("message").textContent = data.message;
+        }
+    </script>
+</body>
+</html>

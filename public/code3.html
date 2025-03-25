@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinity Bank - Create Account</title>
+    <link rel="stylesheet" href="styles_3.css">
+</head>
+<body>
+        <!-- ✅ Create Account Button (Top Right) -->
+        <a href="code4.html" class="top-right">Login</a>
+    <div class="container">
+        <h1>Infinity Bank</h1>
+        <p>Create Your Account</p>
+        <form id="registerForm">
+            <input type="text" id="name" placeholder="Enter Name" required>
+            <input type="date" id="dob" required>
+            <input type="text" id="aadhaar" placeholder="Aadhaar Number" required>
+            <input type="tel" id="phone" placeholder="Mobile Number" required>
+            <input type="email" id="email" placeholder="Email ID" required>
+            <input type="text" id="username" placeholder="Choose a Username" required>
+            <input type="text" id="address" placeholder="Address" required>
+            <input type="password" id="password" placeholder="Password (min 8 characters)" required>
+            <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+
+            <p id="message"></p> 
+            <p id="accountNumberDisplay" style="font-weight: bold; color: green;"></p> 
+            <p id="cardNumberDisplay" style="font-weight: bold; color: blue;"></p> 
+
+            <button type="button" class="btn" onclick="register()">Create Account</button>
+        </form>
+    </div>
+
+    <script>
+       async function register() {
+    const username = document.getElementById("username").value;
+    const name = document.getElementById("name").value;
+    const dob = document.getElementById("dob").value;
+    const aadhaar = document.getElementById("aadhaar").value;
+    const phone = document.getElementById("phone").value;
+    const email = document.getElementById("email").value;
+    const address = document.getElementById("address").value;
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+    const message = document.getElementById("message");
+    const accountNumberDisplay = document.getElementById("accountNumberDisplay");
+    const cardNumberDisplay = document.getElementById("cardNumberDisplay");
+
+    if (!username || !name || !dob || !aadhaar || !phone || !email || !address || !password || !confirmPassword) {
+        message.textContent = "All fields are required!";
+        return;
+    }
+
+    if (password.length < 8) {
+        message.textContent = "Password must be at least 8 characters long!";
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        message.textContent = "Passwords do not match!";
+        return;
+    }
+
+    try {
+        const response = await fetch("/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, name, dob, aadhaar, phone, email, address, password })
+        });
+
+        const result = await response.json();
+        message.textContent = result.message;
+
+        if (result.success) {
+            accountNumberDisplay.innerHTML = `Account Number: <strong>${result.accountNumber}</strong>`;
+            cardNumberDisplay.innerHTML = `Card Number: <strong>${result.cardNumber}</strong>`;
+
+            // ✅ Redirect to view-card.html with username stored in localStorage
+            localStorage.setItem("username", username);
+            setTimeout(() => {
+                window.location.href = "view-card.html";
+            }, 3000);
+        }
+    } catch (error) {
+        message.textContent = "Error connecting to server.";
+    }
+}
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>

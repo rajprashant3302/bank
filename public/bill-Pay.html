@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Pay - Infinity Bank</title>
+    <link rel="stylesheet" href="styles_Bill.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Bill Pay</h1>
+            <p>Pay your bills instantly with Infinity Bank.</p>
+        </div>
+
+        <!-- Bill Pay Form -->
+        <div class="content">
+            <form id="bill-pay-form">
+                <label for="bill-type">Select Bill Type:</label>
+                <select id="bill-type" name="bill-type" required>
+                    <option value="">-- Select --</option>
+                    <option value="electricity">Electricity</option>
+                    <option value="water">Water</option>
+                    <option value="internet">Internet</option>
+                    <option value="gas">Gas</option>
+                </select>
+
+                <label for="bill-number">Bill Number:</label>
+                <input type="text" id="bill-number" name="bill-number" placeholder="Enter bill number" required>
+
+                <label for="amount">Amount (₹):</label>
+                <input type="number" id="amount" name="amount" placeholder="Enter amount" required>
+
+                <button type="button" onclick="requestOTP()">Get OTP</button>
+                
+                <div id="otp-section" style="display: none;">
+                    <label for="otp">Enter OTP:</label>
+                    <input type="text" id="otp" name="otp" placeholder="Enter OTP" required>
+                    <button type="button" onclick="payBill()">Pay Bill</button>
+                </div>
+            </form>
+
+            <!-- Success Message -->
+            <div id="success-message" class="success-message" style="display: none;">
+                <p><i class="fas fa-check-circle"></i> Payment Successful! ₹<span id="amount-paid"></span> has been paid for <span id="bill-type-paid"></span> bill.</p>
+                <p>Remaining Balance: ₹<span id="new-balance"></span></p>
+                <a href="code4.html" class="back-to-dashboard">Return to Dashboard</a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>IP Address 123.45.78.45 | 07:14 PM</p>
+        </div>
+    </div>
+
+    <script>
+        const username = localStorage.getItem("username");
+
+        async function requestOTP() {
+            if (!username) {
+                alert("User not logged in!");
+                return;
+            }
+            const response = await fetch("/request-otp", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username })
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                alert("OTP sent to your registered email!");
+                document.getElementById("otp-section").style.display = "block";
+            } else {
+                alert(data.message);
+            }
+        }
+
+        async function payBill() {
+            const billType = document.getElementById("bill-type").value;
+            const billNumber = document.getElementById("bill-number").value;
+            const amount = parseFloat(document.getElementById("amount").value);
+            const otp = document.getElementById("otp").value;
+
+            if (!billType || !billNumber || !amount || !otp) {
+                alert("All fields are required!");
+                return;
+            }
+
+            const response = await fetch("/pay-bill", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, billType, billNumber, amount, otp })
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                document.getElementById("bill-pay-form").style.display = "none";
+                document.getElementById("success-message").style.display = "block";
+                document.getElementById("amount-paid").innerText = amount;
+                document.getElementById("bill-type-paid").innerText = billType.charAt(0).toUpperCase() + billType.slice(1);
+                document.getElementById("new-balance").innerText = data.newBalance;
+            } else {
+                alert(data.message);
+            }
+        }
+    </script>
+</body>
+</html>
