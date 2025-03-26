@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Infinity Bank</title>
+    <link rel="stylesheet" href="styles_login.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Admin Login - Infinity Bank</h1>
+            <p>Only authorized personnel can access this panel.</p>
+        </div>
+
+        <!-- Login Form -->
+        <div class="login-form">
+            <label for="admin-username">Username:</label>
+            <input type="text" id="admin-username" placeholder="Enter Admin Username" required>
+
+            <label for="admin-password">Password:</label>
+            <input type="password" id="admin-password" placeholder="Enter Admin Password" required>
+
+            <button onclick="loginAdmin()">Login</button>
+            <p id="error-message"></p>
+        </div>
+    </div>
+
+    <script>
+        async function loginAdmin() {
+            const username = document.getElementById("admin-username").value;
+            const password = document.getElementById("admin-password").value;
+            const errorMessage = document.getElementById("error-message");
+
+            const response = await fetch("/admin-login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password })
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                window.location.href = "dashboard.html";
+            } else {
+                errorMessage.textContent = "Invalid credentials! Please try again.";
+                errorMessage.style.color = "red";
+            }
+        }
+    </script>
+</body>
+</html>

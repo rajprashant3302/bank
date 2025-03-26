@@ -1,0 +1,126 @@
+/* ✅ General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background: url('../bank2.webp') no-repeat center center/cover;
+    color: #333;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* ✅ Container */
+.container {
+    width: 90%;
+    max-width: 400px; /* ✅ Set to a vertical-friendly width */
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    display: flex;
+    flex-direction: column; /* ✅ Everything stacked vertically */
+    align-items: center;
+}
+
+/* ✅ Header */
+.header {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 24px;
+    color: #007BFF;
+}
+
+.back-btn {
+    text-decoration: none;
+    color: white;
+    background: #007BFF;
+    padding: 10px 15px;
+    border-radius: 5px;
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.back-btn:hover {
+    background: #0056b3;
+}
+
+/* ✅ User Info */
+.user-info {
+    width: 100%;
+    text-align: center;
+}
+
+.user-info p {
+    font-size: 16px;
+    margin: 10px 0;
+    text-align: left;
+    width: 100%;
+}
+
+/* ✅ Editable Fields */
+input.editable {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+/* ✅ Save Button */
+button {
+    background: #28a745;
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 15px;
+}
+
+button:hover {
+    background: #218838;
+}
+
+/* ✅ Transaction History */
+.transaction-section {
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.transaction-section h3 {
+    font-size: 20px;
+    color: #333;
+    border-bottom: 2px solid #007BFF;
+    padding-bottom: 5px;
+    width: 100%;
+}
+
+#transaction-list {
+    list-style-type: none;
+    padding: 0;
+    max-height: 200px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+#transaction-list li {
+    background: #f8f9fa;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    font-size: 14px;
+    border-left: 4px solid #007BFF;
+    text-align: left;
+}

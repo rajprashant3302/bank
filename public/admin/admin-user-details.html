@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details - Infinity Bank</title>
+    <link rel="stylesheet" href="styles_admin.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>User Details</h1>
+            <a href="dashboard.html" class="back-btn">Back to Admin Panel</a>
+        </div>
+
+        <div class="user-info">
+            <h2 id="user-name">User: Loading...</h2>
+            <p><strong>Account Number:</strong> <span id="account-number"></span></p>
+            <p><strong>Card Number:</strong> <span id="card-number"></span></p>
+            <label><strong>Date of Birth:</strong></label>
+            <input type="date" id="dob" class="editable">
+            
+            <p><strong>Balance:</strong> ₹<span id="balance"></span></p>
+
+            <label><strong>Email:</strong></label>
+            <input type="email" id="email" class="editable">
+
+            <label><strong>Phone:</strong></label>
+            <input type="text" id="phone" class="editable">
+
+            <label><strong>Address:</strong></label>
+            <input type="text" id="address" class="editable">
+
+            <label><strong>Password:</strong></label>
+            <input type="text" id="password" class="editable">
+
+            <button onclick="saveChanges()">Save Changes</button>
+        </div>
+
+        <div class="transaction-section">
+            <h3>Transaction History</h3>
+            <ul id="transaction-list">
+                <!-- Transactions will be inserted dynamically -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        async function fetchUserDetails() {
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const username = urlParams.get("username");
+
+                if (!username) {
+                    alert("Invalid request! Username missing.");
+                    window.location.href = "dashboard.html";
+                    return;
+                }
+
+                const response = await fetch(`/getUserDetails?username=${encodeURIComponent(username)}`);
+                const user = await response.json();
+
+                if (user.success) {
+                    document.getElementById("user-name").textContent = user.name;
+                    document.getElementById("account-number").textContent = user.accountNumber;
+                    document.getElementById("card-number").textContent = user.cardNumber;
+                    document.getElementById("dob").textContent = user.dob;
+                    document.getElementById("balance").textContent = user.balance;
+                    document.getElementById("email").value = user.email;
+                    document.getElementById("phone").value = user.phone;
+                    document.getElementById("address").value = user.address;
+                    document.getElementById("password").value = user.password;
+
+                    // ✅ Show Transactions
+                    const transactionList = document.getElementById("transaction-list");
+                    transactionList.innerHTML = ""; 
+                    user.transactions.forEach(transaction => {
+                        const li = document.createElement("li");
+                        li.textContent = transaction;
+                        transactionList.appendChild(li);
+                    });
+                } else {
+                    alert("User not found!");
+                    window.location.href = "dashboard.html"; // Redirect to admin panel
+                }
+            } catch (error) {
+                console.error("❌ Error fetching user details:", error);
+            }
+        }
+
+        async function saveChanges() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const username = urlParams.get("username");
+
+            const updatedData = {
+                username: username,
+                email: document.getElementById("email").value,
+                phone: document.getElementById("phone").value,
+                address: document.getElementById("address").value,
+                dob: document.getElementById("dob").value,
+                password: document.getElementById("password").value
+            };
+
+            const response = await fetch("/updateUser", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(updatedData)
+            });
+
+            const result = await response.json();
+            alert(result.message);
+        }
+
+        fetchUserDetails();
+    </script>
+</body>
+</html>

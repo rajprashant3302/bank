@@ -440,5 +440,106 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "index.html"));
 });
 
+
+
+//admin page starts
+
+const ADMIN_USERNAME = "ra-one";
+const ADMIN_PASSWORD = "6203975553";
+
+// ✅ Load Users Safely
+function loadUsers() {
+    try {
+        const data = fs.readFileSync(USERS_FILE, "utf8");
+        return JSON.parse(data) || {};
+    } catch (error) {
+        console.error("Error loading users:", error);
+        return {}; // Ensure it always returns an object
+    }
+    
+}
+
+// ✅ Save Users
+function saveUsers(users) {
+    fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2), "utf8");
+}
+
+// ✅ Admin Login
+app.post("/admin-login", (req, res) => {
+    const { username, password } = req.body;
+    if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+        return res.json({ success: true });
+    }
+    res.json({ success: false, message: "Invalid admin credentials!" });
+});
+
+// ✅ Get All Users
+app.get("/getAllUsers", (req, res) => {
+    const users = loadUsers();
+    const userArray = Object.keys(users).map(username => ({
+        username,  // ✅ Now username is included
+        ...users[username]
+    }));
+    res.json(userArray);
+});
+
+
+// ✅ Get Specific User Details
+app.get("/getUserDetails", (req, res) => {
+    const username = req.query.username;
+    let users = loadUsers();
+
+    if (!username) {
+        return res.status(400).json({ success: false, message: "Username parameter missing!" });
+    }
+
+    if (!users[username]) {
+        console.log(`❌ User not found: ${username}`);
+        return res.status(400).json({ success: false, message: "User not found!" });
+    }
+
+    console.log(`✅ User found: ${username}`, users[username]);
+
+    res.json({ success: true, username, ...users[username] });  // ✅ Include username in response
+});
+
+
+// ✅ Update User Details
+app.post("/updateUser", (req, res) => {
+    const { username, name, balance, email, phone, address, password } = req.body;
+    let users = loadUsers();
+
+    if (!users[username]) {
+        console.log(`❌ Cannot update. User not found: ${username}`);
+        return res.status(400).json({ success: false, message: "User not found!" });
+    }
+
+    users[username] = { ...users[username], name, balance: parseFloat(balance), email, phone, address, password };
+    saveUsers(users);
+
+    console.log(`✅ User updated: ${username}`, users[username]);
+    res.json({ success: true, message: "User details updated successfully!" });
+});
+
+// ✅ Delete User
+app.post("/deleteUser", (req, res) => {
+    const { username } = req.body;
+    let users = loadUsers();
+
+    if (!users[username]) {
+        return res.json({ success: false, message: "User not found!" });
+    }
+
+    delete users[username];
+    saveUsers(users);
+
+    console.log(`✅ User deleted: ${username}`);
+    res.json({ success: true, message: "User account deleted successfully!" });
+});
+
+
+
+//admin page ends
+
 // ✅ Start Server
 app.listen(PORT, () => console.log(`🚀 Server running at http://localhost:${PORT}`));
