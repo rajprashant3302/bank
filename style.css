@@ -1,0 +1,98 @@
+body {
+    display: flex;
+    background: url('bank2.webp') no-repeat center center/cover;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+}
+ /* ✅ Style for the top-right "Create Account" button */
+ .top-right {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+}
+.top-right:hover {
+    background-color: #0056b3;
+}
+ /* ✅ Style for the top-right "Create Account" button */
+ .top-right1 {
+    position: absolute;
+    top: 10px;
+    right: 190px;
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+}
+.top-right1:hover {
+    background-color: #0056b3;}
+
+h2 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    font-size: 16px;
+    margin: 5px 0;
+    color: #555;
+}
+
+input {
+    display: block;
+    width: 80%;
+    max-width: 300px;
+    padding: 12px;
+    font-size: 16px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #007BFF;
+}
+
+button {
+    padding: 12px 20px;
+    font-size: 18px;
+    color: white;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 85%;
+    max-width: 300px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
